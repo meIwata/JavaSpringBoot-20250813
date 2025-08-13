@@ -12,6 +12,7 @@ http://localhost:8080/api/students
 選擇 Body
 選擇 raw
 選擇 JSON
+* 程式有改的話需要重新啟動 
 ```json
 {
 "firstName": "Emma",
@@ -27,6 +28,7 @@ http://localhost:8080/api/students/1
 選擇 Body
 選擇 raw
 選擇 JSON
+* 程式有改的話需要重新啟動
 ```json
 {
 "studentId": 1,

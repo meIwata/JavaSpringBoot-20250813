@@ -25,7 +25,7 @@ public class StudentController {
     }
 
 
-    // 查詢特定學生資料
+    // 查詢特定指定id學生資料
     @GetMapping("/{id}") // 完整路徑會是 /api/students/{id}
     public Student getStudent(@PathVariable int id) {
         for (Student student : students) {
@@ -52,8 +52,9 @@ public class StudentController {
     // 新增學生資料
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
-        student.setStudentId(students.get(students.size() - 1).getStudentId() + 1);
-        students.add(student);
+//        student.setStudentId(students.get(students.size() - 1).getStudentId() + 1);
+        student.setStudentId(students.size() + 1); // 設定新的學
+        students.add(student); // 因為這個還沒有串資料庫，所以沒有id autoincrement的功能，可以直接在postman測試時，手動設定id
         return student;
     }
 
