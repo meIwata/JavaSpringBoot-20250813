@@ -52,12 +52,13 @@ public class StudentController {
     // 新增學生資料
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
-//        student.setStudentId(students.get(students.size() - 1).getStudentId() + 1);
-        student.setStudentId(students.size() + 1); // 設定新的學
+        student.setStudentId(students.get(students.size() - 1).getStudentId() + 1); // 設定新的學生ID為目前最後一個學生ID加1，有可能第id=1資料被刪除，只剩id=2的資料
+        //student.setStudentId(students.size() + 1); // 設定新的學
         students.add(student); // 因為這個還沒有串資料庫，所以沒有id autoincrement的功能，可以直接在postman測試時，手動設定id
         return student;
     }
 
+    // 更新學生資料
     @PutMapping("/{id}")
     public Student updateStudent(@PathVariable int id, @RequestBody Student updatedStudent) {
         for (int i = 0; i < students.size(); i++) {
