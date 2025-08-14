@@ -9,7 +9,8 @@ import java.sql.SQLException;
 
 @Service
 public class DatabaseService {
-    @Value("${spring.datasource.url}") //使用spring的@Value
+// 使用Spring的@Value註解來讀取application.properties中的資料庫連線資訊
+    @Value("${spring.datasource.url}")
     private String datasourceUrl;
 
     @Value("${spring.datasource.username}")

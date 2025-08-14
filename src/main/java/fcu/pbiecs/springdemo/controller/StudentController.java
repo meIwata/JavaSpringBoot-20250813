@@ -1,6 +1,8 @@
 package fcu.pbiecs.springdemo.controller;
 
 import fcu.pbiecs.springdemo.model.Student;
+import fcu.pbiecs.springdemo.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -10,6 +12,17 @@ import java.util.List;
 @RestController // 處理HTTP請求的控制器
 @RequestMapping("/api/students") // 定義路徑前綴
 public class StudentController {
+    @Autowired // 自動注入StudentService，這樣就可以使用學生服務
+    private StudentService studentService;
+
+    // 查詢所有學生資料
+    @GetMapping
+    public List<Student> getStudents() {
+        return studentService.getAllStudents();
+    }
+
+
+    /*
     private List<Student> students = new ArrayList<>();
 
     public StudentController() {
@@ -70,4 +83,6 @@ public class StudentController {
         }
         return null; // 如果找不到學生，返回null
     }
+    */
+
 }
