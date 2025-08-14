@@ -28,10 +28,21 @@ public class StudentController {
 
     // 刪除特定學生資料
     @DeleteMapping("/{id}") // 完整路徑會是 /api/students
-    public boolean deleteStudent(@PathVariable int id) {
+    public String deleteStudent(@PathVariable int id) {
         return studentService.deleteStudentById(id);
     }
 
+    // 新增學生資料
+    @PostMapping
+    public Student createStudent(@RequestBody Student student) {
+        return studentService.createStudent(student);
+    }
+
+    // 更新學生資料
+    @PutMapping("/{id}")
+    public Student updateStudent(@PathVariable int id, @RequestBody Student updatedStudent) {
+        return studentService.updateStudent(id, updatedStudent);
+    }
     /*
     private List<Student> students = new ArrayList<>();
 

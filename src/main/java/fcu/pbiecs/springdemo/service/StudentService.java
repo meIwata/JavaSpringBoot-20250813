@@ -71,15 +71,62 @@ public class StudentService {
     }
 
     // 刪除特定學生資料
-    public boolean deleteStudentById(int studentId) {
+    public String deleteStudentById(int studentId) {
         String sql = "DELETE FROM Student WHERE student_id = ?";
         try (Connection conn = dbService.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, studentId);
             int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0; // 如果有刪除成功的行數
-        }  catch (SQLException exception) {
-        exception.printStackTrace();}
-            return false; // 如果發生錯誤，返回false
+            if (rowsAffected > 0) {
+                return "成功刪除 id=" + studentId + " 的資料";
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return "刪除失敗或找不到 id=" + studentId + " 的資料";
+    }
+
+    // 新增學生資料
+    public Student createStudent(Student student) {
+        String sql = "INSERT INTO Student (first_name, last_name, email, date_of_birth) VALUES (?, ?, ?, ?)";
+        try (Connection conn = dbService.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, student.getFirstName());
+            pstmt.setString(2, student.getLastName());
+            pstmt.setString(3, student.getEmail());
+            pstmt.setString(4, student.getBirthday());
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int newId = generatedKeys.getInt(1);
+                    student.setStudentId(newId); // 設定新學生的ID
+                    return student;
+                }
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null; // 如果新增失敗，返回null
+    }
+
+    // 更新學生資料
+    public Student updateStudent(int id, Student student) {
+        String sql = "UPDATE Student SET first_name = ?, last_name = ?, email = ?, date_of_birth = ? WHERE student_id = ?";
+        try (Connection conn = dbService.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, student.getFirstName());
+            pstmt.setString(2, student.getLastName());
+            pstmt.setString(3, student.getEmail());
+            pstmt.setString(4, student.getBirthday());
+            pstmt.setInt(5, student.getStudentId());
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                return student; // 更新成功，返回更新後的學生資料
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null; // 如果更新失敗，返回null
     }
 }
