@@ -47,4 +47,24 @@ public class StudentService {
         }
         return students;
     }
+
+    public Student getStudentById(int studentId) {
+        String sql = "SELECT * FROM Student WHERE student_id = ?";
+        try (Connection conn = dbService.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, studentId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("student_id");
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+                String birthday = rs.getString("date_of_birth");
+                String email = rs.getString("email");
+                return new Student(studentId, firstName, lastName, email, birthday);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null; // 如果沒有找到學生，返回null
+    }
 }

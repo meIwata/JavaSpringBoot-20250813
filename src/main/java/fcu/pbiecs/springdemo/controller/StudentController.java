@@ -21,6 +21,11 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
+    // 查詢特定指定id學生資料
+    @GetMapping("/{id}") // 完整路徑會是 /api/students
+    public Student getStudent(@PathVariable int id) {
+        return studentService.getStudentById(id);
+    }
 
     /*
     private List<Student> students = new ArrayList<>();
