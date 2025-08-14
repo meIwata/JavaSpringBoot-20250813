@@ -17,6 +17,7 @@ public class StudentService {
     @Autowired // 自動注入DatabaseService，這樣就可以使用資料庫服務
     private DatabaseService dbService;
 
+    // 查詢所有學生資料
     public List<Student> getAllStudents() {
         List<Student> students = new ArrayList<>();
 
@@ -48,6 +49,7 @@ public class StudentService {
         return students;
     }
 
+    // 查詢特定指定id學生資料
     public Student getStudentById(int studentId) {
         String sql = "SELECT * FROM Student WHERE student_id = ?";
         try (Connection conn = dbService.connect();
@@ -66,5 +68,18 @@ public class StudentService {
             exception.printStackTrace();
         }
         return null; // 如果沒有找到學生，返回null
+    }
+
+    // 刪除特定學生資料
+    public boolean deleteStudentById(int studentId) {
+        String sql = "DELETE FROM Student WHERE student_id = ?";
+        try (Connection conn = dbService.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, studentId);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0; // 如果有刪除成功的行數
+        }  catch (SQLException exception) {
+        exception.printStackTrace();}
+            return false; // 如果發生錯誤，返回false
     }
 }

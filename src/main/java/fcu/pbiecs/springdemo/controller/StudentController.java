@@ -5,7 +5,6 @@ import fcu.pbiecs.springdemo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("*") // 允許所有來源的跨域請求
@@ -25,6 +24,12 @@ public class StudentController {
     @GetMapping("/{id}") // 完整路徑會是 /api/students
     public Student getStudent(@PathVariable int id) {
         return studentService.getStudentById(id);
+    }
+
+    // 刪除特定學生資料
+    @DeleteMapping("/{id}") // 完整路徑會是 /api/students
+    public boolean deleteStudent(@PathVariable int id) {
+        return studentService.deleteStudentById(id);
     }
 
     /*
