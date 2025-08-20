@@ -75,8 +75,8 @@ public class StudentService {
         String sql = "DELETE FROM Student WHERE student_id = ?";
         try (Connection conn = dbService.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, studentId);
-            int rowsAffected = pstmt.executeUpdate();
+            pstmt.setInt(1, studentId); // 有問號就要塞值
+            int rowsAffected = pstmt.executeUpdate(); // 執行更新操作，返回受影響的行數
             if (rowsAffected > 0) {
                 return "成功刪除 id=" + studentId + " 的資料";
             }
