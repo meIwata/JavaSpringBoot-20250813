@@ -37,4 +37,10 @@ public class CourseController {
     public String createCourse(@RequestBody Course course) {
         return courseService.createCourse(course);
     }
+
+    // 更新課程資料
+    @PutMapping("/{id}")
+    public String updateCourse(@PathVariable int id, @RequestBody Course updatedCourse) {
+        return courseService.updateCourse(id, updatedCourse);
+    }
 }
