@@ -13,6 +13,11 @@ import java.util.List;
 public class EnrollmentController {
     @Autowired
     private EnrollmentService enrollmentService;
+    // 查詢所有選課
+    @GetMapping
+    public List<Enrollment> getAllEnrollments() {
+        return enrollmentService.getAllEnrollments();
+    }
 
     // 查詢某學生的所有選課
     @GetMapping("/{studentId}")

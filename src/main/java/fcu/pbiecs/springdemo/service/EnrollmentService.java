@@ -19,7 +19,7 @@ public class EnrollmentService {
 
     // 新增選課
     public String addEnrollment(int studentId, int courseId) {
-        String sql = "INSERT INTO Enrollment (student_id, course_id, enroll_date) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Enrollment (student_id, course_id, enrollment_date) VALUES (?, ?, ?)";
         try (Connection conn = databaseService.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, studentId);
@@ -35,6 +35,26 @@ public class EnrollmentService {
         return "選課失敗";
     }
 
+    // 查詢所有選課
+    public List<Enrollment> getAllEnrollments() {
+        List<Enrollment> enrollments = new ArrayList<>();
+        String sql = "SELECT * FROM Enrollment";
+        try (Connection conn = databaseService.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Enrollment enrollment = new Enrollment();
+                enrollment.setStudentId(rs.getInt("student_id"));
+                enrollment.setCourseId(rs.getInt("course_id"));
+                enrollment.setEnrollDate(rs.getDate("enrollment_date"));
+                enrollments.add(enrollment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return enrollments;
+    }
+
     // 查詢某學生的所有選課
     public List<Enrollment> getEnrollmentsByStudentId(int studentId) {
         List<Enrollment> enrollments = new ArrayList<>();
@@ -47,7 +67,7 @@ public class EnrollmentService {
                 Enrollment enrollment = new Enrollment();
                 enrollment.setStudentId(rs.getInt("student_id"));
                 enrollment.setCourseId(rs.getInt("course_id"));
-                enrollment.setEnrollDate(rs.getDate("enroll_date"));
+                enrollment.setEnrollDate(rs.getDate("enrollment_date"));
                 enrollments.add(enrollment);
             }
         } catch (SQLException e) {
