@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Teacher {
+@Data
+public class Course {
+    private int courseId;
+    private String courseName;
+    private String courseDescription;
+    private int credits;
     private int teacherId;
-    private String name;
-    private String email;
-    private int age;
 }
