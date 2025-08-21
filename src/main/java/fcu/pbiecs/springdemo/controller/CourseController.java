@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// http://localhost:8080/swagger-ui/index.html，可以利用Swagger標籤來生成API文檔，來查詢Restful API的使用方式
 @Tag(name="課程管理", description = "提供課程  CRUD API")
 @CrossOrigin("*") // 允許所有來源的跨域請求
 @RestController // 處理HTTP請求的控制器
