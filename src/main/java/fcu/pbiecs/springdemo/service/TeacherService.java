@@ -58,7 +58,7 @@ public class TeacherService {
     }
 
     // 刪除教師資料
-    public String deleteTeacher(int teacherId) {
+    public String deleteTeacherById(int teacherId) {
         String sql = "DELETE FROM Teacher WHERE teacher_id = ?";
         try (Connection conn = databaseService.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -97,7 +97,7 @@ public class TeacherService {
     }
 
     // 更新教師資料
-    public Teacher updateTeacher(Teacher teacher) {
+    public Teacher updateTeacher(int id, Teacher teacher) {
         String sql = "UPDATE Teacher SET name = ?, email = ?, age = ? WHERE teacher_id = ?";
         try (Connection conn = databaseService.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
