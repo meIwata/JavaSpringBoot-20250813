@@ -2,11 +2,13 @@ package fcu.pbiecs.springdemo.controller;
 
 import fcu.pbiecs.springdemo.model.Student;
 import fcu.pbiecs.springdemo.service.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Tag(name="學生管理", description = "提供學生 CRUD API") // Swagger註解，描述這個控制器的功能
 @CrossOrigin("*") // 允許所有來源的跨域請求
 @RestController // 處理HTTP請求的控制器
 @RequestMapping("/api/students") // 定義路徑前綴
@@ -15,30 +17,35 @@ public class StudentController {
     private StudentService studentService;
 
     // 查詢所有學生資料
+    @Operation(summary = "查詢所有學生", description = "查詢所有學生資料")
     @GetMapping
     public List<Student> getStudents() {
         return studentService.getAllStudents();
     }
 
     // 查詢特定指定id學生資料
+    @Operation(summary = "查詢特定學生", description = "根據ID查詢特定學生")
     @GetMapping("/{id}") // 完整路徑會是 /api/students
     public Student getStudent(@PathVariable int id) {
         return studentService.getStudentById(id);
     }
 
     // 刪除特定學生資料
+    @Operation(summary = "刪除特定學生", description = "根據ID刪除特定學生")
     @DeleteMapping("/{id}") // 完整路徑會是 /api/students
     public String deleteStudent(@PathVariable int id) {
         return studentService.deleteStudentById(id);
     }
 
     // 新增學生資料
+    @Operation(summary = "新增學生", description = "新增一個新的學生")
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);
     }
 
     // 更新學生資料
+    @Operation(summary = "更新學生", description = "根據ID更新特定學生")
     @PutMapping("/{id}")
     public Student updateStudent(@PathVariable int id, @RequestBody Student updatedStudent) {
         return studentService.updateStudent(id, updatedStudent);
